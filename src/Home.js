@@ -1,9 +1,13 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { requestHelloWorld } from './actions';
+import { requestApiData } from './actions';
 import styled, { keyframes } from 'styled-components';
 import logo from './assets/logo.svg';
+
+
+  const farmUrl = 'https://farm';
+  const staticFlickrUrl = '.staticflickr.com/';
 
 const AppWrapper = styled.div`
   font-family: 'Quicksand', 'Raleway', sans-serif;
@@ -43,7 +47,7 @@ const LogoWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 10rem;
-  width: 10rem; 
+  width: 11rem; 
 `
 
 const Search = styled.input`
@@ -164,16 +168,32 @@ const CroppedImage = styled.img`
 
 class Home extends React.Component {
   componentDidMount() {
-    this.props.requestHelloWorld();
+    this.props.requestApiData();
   }
 
+  flickrImage = (x, i) => (
+    <ImageWrap key={x.id.value}>
+      <ImageCrop>
+        <CroppedImage
+          src={farmUrl+x.farm+staticFlickrUrl+
+          x.server+'/'+x.id+'_'+x.secret+'.jpg'}
+          alt="greetingstosun"
+        />
+      </ImageCrop>
+    </ImageWrap>
+  )
+
+
   render() {
+    const results = this.props.data.photos ? this.props.data.photos.photo : [];
+    console.log(results)
+    console.log(this.props.data.photos);
     return (
       <AppWrapper>
         <AppHeader>
           <LogoWrapper>
             <AppLogo src={logo} alt="logo" />
-            <AppTitle>{this.props.helloWorld}</AppTitle>
+            <AppTitle>Awesome Gallery</AppTitle>
           </LogoWrapper>
           <Search placeholder="Search">
             </Search>
@@ -185,31 +205,16 @@ class Home extends React.Component {
           Components styled with <code>styled-components</code>.
         </AppIntro>
         <ImageContainer>
-          <ImageWrap>
-            <ImageCrop>
-              <CroppedImage
-                src="http://www.journal.hr/wp-content/uploads/2016/02/zadar-velika.jpg?x21908"
-                alt="zadar-velika"
-              />
-            </ImageCrop>
-          </ImageWrap>
-          <ImageWrap>
-            <ImageCrop>
-              <CroppedImage
-                src="http://www.zadar.hr/wp-content/uploads/2015/03/Zadar_greetingtosun.jpg"
-                alt="greetingstosun"
-              />
-            </ImageCrop>
-          </ImageWrap>
+          {results.map(this.flickrImage)}
         </ImageContainer>
       </AppWrapper>
     );
   }
 };
 
-const mapStateToProps = state => ({ helloWorld: state.helloWorld });
+const mapStateToProps = state => ({ data: state.data });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ requestHelloWorld }, dispatch);
+  bindActionCreators({ requestApiData }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
