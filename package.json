@@ -26,9 +26,10 @@
     "jest": "^23.4.2",
     "react": "16.3",
     "react-dom": "^16.4.1",
+    "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
     "redux": "3.7",
-    "redux-saga": "0.16",
+    "redux-saga": "^0.16.0",
     "reselect": "3.0",
     "styled-components": "3.2"
   },
