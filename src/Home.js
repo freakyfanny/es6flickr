@@ -11,7 +11,8 @@ import logo from './assets/logo.svg';
 
 const AppWrapper = styled.div`
   font-family: 'Quicksand', 'Raleway', sans-serif;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 `
 
 const rotate360 = keyframes`
@@ -40,6 +41,7 @@ const AppHeader = styled.div`
   flex-direction: row;
   align-content: flex-start;
   color: white;
+  text-align: center;
 `
 
 const LogoWrapper = styled.div`
@@ -74,13 +76,14 @@ const AppTitle = styled.h1`
 const AppIntro = styled.p`
   font-family: 'Raleway', sans-serif;
   font-size: medium;
+  align-self: center;
   code {
     font-size: 1.3rem;
   }
 `
 
 const ImageContainer = styled.div`
-  margin: 140px auto 0;
+  margin: 4rem auto 0;
   font-size:0;
   max-width: 50%;
 `
@@ -166,6 +169,24 @@ const CroppedImage = styled.img`
   }
   `
 
+const List = styled.ul`
+  list-style: none;
+  padding-left: 0;
+`
+
+const ListItem = styled.li`
+  margin: 0.5rem 0;
+`
+
+const Link = styled.a`
+  color: #1497d4;
+  margin-left: 0.25rem;
+  text-decoration: none;
+  &:hover {
+    color: #0b4c6b;
+  }
+`
+
 class Home extends React.Component {
   componentDidMount() {
     this.props.requestApiData();
@@ -177,7 +198,7 @@ class Home extends React.Component {
         <CroppedImage
           src={farmUrl+x.farm+staticFlickrUrl+
           x.server+'/'+x.id+'_'+x.secret+'.jpg'}
-          alt="greetingstosun"
+          alt={x.title}
         />
       </ImageCrop>
     </ImageWrap>
@@ -199,10 +220,39 @@ class Home extends React.Component {
             </Search>
         </AppHeader>
         <AppIntro>
-          Bootstrapped with <code>create-react-app</code>.
-        </AppIntro>
-        <AppIntro>
-          Components styled with <code>styled-components</code>.
+          <List>
+            <ListItem>Build with 
+             <Link href="https://github.com/facebook/react">
+              <code>ReactJS</code>
+             </Link>.
+            </ListItem>
+            <ListItem>Components styled with 
+             <Link href="https://github.com/styled-components/styled-components">
+              <code>styled-components</code>
+             </Link>.
+            </ListItem>
+            <ListItem>Store created using
+             <Link href="https://github.com/reactjs/react-redux/">
+              <code>Redux</code>
+             </Link>.
+            </ListItem>
+            <ListItem>Feeding actions from redux with 
+             <Link href="https://github.com/redux-saga/redux-saga">
+              <code>Redux Saga</code>
+             </Link>.
+            </ListItem>
+            <ListItem>
+              Creating immutabble objects with 
+             <Link href="https://facebook.github.io/immutable-js/">
+               <code>Immutable JS</code>
+             </Link>.
+            </ListItem>
+            <ListItem>
+             <Link href="https://facebook.github.io/immutable-js/">
+              <code>Immutable JS</code>
+             </Link>
+            </ListItem>
+          </List>
         </AppIntro>
         <ImageContainer>
           {results.map(this.flickrImage)}
