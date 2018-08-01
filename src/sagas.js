@@ -8,7 +8,7 @@ import { fetchData } from './api';
 function* getApiData(action) {
   try {
     const data = yield call(fetchData);
-    yield put(receiveApiData(data));
+    yield put(receiveApiData(data.photos));
   } catch (e) {
     console.log(e);
   }

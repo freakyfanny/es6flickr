@@ -206,9 +206,9 @@ class Home extends React.Component {
 
 
   render() {
-    const results = this.props.data.photos ? this.props.data.photos.photo : [];
+    const results = this.props.photos ? this.props.photos : [];
     console.log(results)
-    console.log(this.props.data.photos);
+    console.log(this.props.photos);
     return (
       <AppWrapper>
         <AppHeader>
