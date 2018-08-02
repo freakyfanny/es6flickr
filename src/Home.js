@@ -5,10 +5,6 @@ import { requestApiData } from './actions';
 import styled, { keyframes } from 'styled-components';
 import logo from './assets/logo.svg';
 
-
-  const farmUrl = 'https://farm';
-  const staticFlickrUrl = '.staticflickr.com/';
-
 const AppWrapper = styled.div`
   font-family: 'Quicksand', 'Raleway', sans-serif;
   display: flex;
@@ -193,12 +189,11 @@ class Home extends React.Component {
   }
 
   flickrImage = (x, i) => (
-    <ImageWrap key={x.id.value}>
+    <ImageWrap key={x.id}>
       <ImageCrop>
         <CroppedImage
-          src={farmUrl+x.farm+staticFlickrUrl+
-          x.server+'/'+x.id+'_'+x.secret+'.jpg'}
-          alt={x.title}
+          src={x.getUrl()}
+          alt={x.getTitle()}
         />
       </ImageCrop>
     </ImageWrap>
