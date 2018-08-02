@@ -206,6 +206,7 @@ class Home extends React.Component {
 
 
   render() {
+    console.log(this.props);
     const results = this.props.photos ? this.props.photos : [];
     console.log(results)
     console.log(this.props.photos);
@@ -262,7 +263,10 @@ class Home extends React.Component {
   }
 };
 
-const mapStateToProps = state => ({ data: state.data });
+function mapStateToProps(state) {
+  const photos = state.data.get('photos');
+  return { photos: photos };
+}
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ requestApiData }, dispatch);

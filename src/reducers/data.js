@@ -2,18 +2,22 @@ import { RECEIVE_API_DATA } from '../actions';
 import Image from './models/image';
 import Immutable from 'immutable';
 
-const initialState = new Immutable.OrderedMap();
+const initialState = new Immutable.Map();
 
 const mergeEntities = (state, newImages) => {
-    // console.log(newImages.photo.map((image) => new Image(image)));
-    let list = newImages.photo.map((image) => new Image(image));
-    state.merge(newImages.photo.map((image) => new Image(image)));
-    const photos = new Immutable.OrderedMap(list.map(key => [key, list[key]]))
-    console.log('merge');
-    // console.log(photos);
-    state = { ...state, photos};
-    //state.merge(photos);
-    console.log(state);
+    let imagesUnmapped = [];
+    if(newImages.photos) {
+        imagesUnmapped = newImages.photos.photo;
+    }
+    const newList = imagesUnmapped.map((image) => new Image(image));
+    const oldList = state.get('photos') ? state.get('photos') : [];
+    console.log(newList);
+    // Do sorting here
+    const sortedList = [...oldList, ...newList];
+    const newState = state.set('photos', sortedList);
+    console.log('newstate');
+    console.log(newState);
+    return newState
 }
 
 export default (state = initialState, {type , data }) => {
